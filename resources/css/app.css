@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
 
@@ -8,59 +9,99 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
-
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
-}
-
 @layer theme {
+    :root {
+        --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+        --color-background: #F3F3F3;
+        --color-primary: #962B63;
+        --color-primary-dark: #7a2351;
+        --color-primary-light: #b83575;
+        --color-secondary: #F4D4ED;
+        --color-secondary-dark: #e8b5db;
+        --color-black: #171717;
+        --color-grey: #333333;
+        --color-light-grey: #5B5B5B;
+        --color-white: #ffffff;
+
+        /* Zinc scale - adaptée à votre palette */
+        --color-zinc-50: #F3F3F3;
+        --color-zinc-100: #e8e8e8;
+        --color-zinc-200: #d4d4d4;
+        --color-zinc-300: #b8b8b8;
+        --color-zinc-400: #8a8a8a;
+        --color-zinc-500: #5B5B5B;
+        --color-zinc-600: #464646;
+        --color-zinc-700: #333333;
+        --color-zinc-800: #232323;
+        --color-zinc-900: #171717;
+        --color-zinc-950: #0a0a0a;
+
+        /* Pink scale - pour vos boutons et accents */
+        --color-pink-50: #fef3fb;
+        --color-pink-100: #fce9f7;
+        --color-pink-200: #F4D4ED;
+        --color-pink-300: #ebb5de;
+        --color-pink-400: #de8cc6;
+        --color-pink-500: #c95da7;
+        --color-pink-600: #b03d88;
+        --color-pink-700: #962B63;
+        --color-pink-800: #7a2351;
+        --color-pink-900: #651e44;
+        --color-pink-950: #3e0d27;
+
+        /* Accent configuration */
+        --color-accent: var(--color-primary);
+        --color-accent-content: var(--color-primary);
+        --color-accent-foreground: var(--color-background);
+    }
+
+
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-background: #171717;
+        --color-primary: #F4D4ED;
+        --color-primary-light: #ffffff;
+        --color-primary-dark: #e8b5db;
+
+        --color-black: #F3F3F3;
+        --color-light-grey: #d4d4d4;
     }
 }
 
 @layer base {
+    body {
+        @apply bg-[var(--color-background)] text-[var(--color-black)] font-sans;
+    }
+
+    .dark body {
+        @apply bg-[var(--color-background)] text-[var(--color-black)];
+    }
 
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--color-light-grey, currentColor);
     }
 }
 
+/* ✅ Compatibilité Flux */
 [data-flux-field]:not(ui-radio, ui-checkbox) {
     @apply grid gap-2;
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+    @apply outline-hidden ring-2 ring-[var(--color-primary)] ring-offset-2 ring-offset-[var(--color-background)];
 }
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+.dark input:focus[data-flux-control],
+.dark textarea:focus[data-flux-control],
+.dark select:focus[data-flux-control] {
+    @apply ring-[var(--color-secondary)] ring-offset-[var(--color-black)];
+}

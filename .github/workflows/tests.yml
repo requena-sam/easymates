@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - develop
-      - main
+      - mainLayout
   pull_request:
     branches:
       - develop
-      - main
+      - mainLayout
 
 jobs:
   ci:
