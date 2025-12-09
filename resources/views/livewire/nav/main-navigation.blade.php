@@ -1,6 +1,7 @@
 <nav x-data="{ open: false }"
      @keydown.escape.window="open = false"
      class="relative">
+    <h2 class="sr-only">{{__('Main Navigation')}}</h2>
     <div class="flex items-center justify-between">
         <ul class="hidden md:flex gap-2 bg-white rounded-full h-11 w-fit items-center">
             @foreach($links as $link)

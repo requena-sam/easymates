@@ -40,7 +40,7 @@
              x-transition:leave="transition ease-in duration-150"
              x-transition:leave-start="opacity-100 scale-100"
              x-transition:leave-end="opacity-0 scale-95"
-             class="absolute right-0 mt-3 w-56 bg-white rounded-lg py-2 z-50">
+             class="absolute right-0 mt-3 w-56 bg-white rounded-lg z-50">
 
             @foreach($links as $link)
                 @php
@@ -52,6 +52,7 @@
                     {{ $link['text'] ?? '' }}
                 </a>
             @endforeach
+            {{$slot}}
         </div>
     @endif
 </div>
