@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_picture')->default('https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png');
             $table->rememberToken();
             $table->timestamps();
         });
