@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\PostTags;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class CreationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 1,
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'tags' => collect(PostTags::cases())->pluck('value')->shuffle()->take(3)->values()->toArray(),
+            'likes_count' => $this->faker->numberBetween(0, 100),
         ];
     }
 }

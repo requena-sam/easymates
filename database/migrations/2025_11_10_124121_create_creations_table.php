@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('creations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->text('description');
+            $table->json('tags')->nullable();
+            $table->json('image_path')->nullable();
+            $table->unsignedBigInteger('likes_count')->default(0);
+            $table->unsignedBigInteger('comments_count')->default(0);
             $table->timestamps();
         });
     }
