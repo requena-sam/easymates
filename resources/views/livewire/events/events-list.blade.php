@@ -1,15 +1,16 @@
 <div class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         @foreach($events as $event)
+
             <a href="{{ route('events.show', $event->id) }}" class="block no-underline">
                 <div
-                    class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col sm:flex-row">
+                    class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col sm:flex-row h-[250px]">
                     {{-- Contenu --}}
-                    <div class="flex-1 p-6 flex flex-col justify-between">
-                        <div
-                            class="w-fit px-4 py-2 rounded-full text-xs font-medium mb-3 bg-pink-100 text-[var(--color-primary)]">
+                    <div class="flex-1 p-6 flex flex-col justify-between overflow-hidden min-w-0">
+                        <p
+                            class="w-fit px-4 py-2 rounded-full text-xs font-medium mb-3 bg-pink-200 text-[var(--color-primary)]">
                             {{ $event->game_name }}
-                        </div>
+                        </p>
                         {{-- Date --}}
                         <div class="flex items-center gap-2 text-[var(--color-primary)] text-sm mb-3">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,30 +21,30 @@
                         </div>
 
                         {{-- Titre --}}
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 overflow-hidden text-ellipsis line-clamp-1" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; word-break: break-word;">
                             {{ $event->name }}
                         </h3>
 
                         {{-- Localisation --}}
                         <div class="flex items-center gap-2 text-gray-600 text-sm mb-3">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
-                            <span>{{ $event->address }}</span>
+                            <span class="truncate">{{ $event->address }}</span>
                         </div>
 
                         {{-- Description --}}
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+                        <p class="text-gray-600 text-sm mb-4 overflow-hidden line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word;">
                             {{ $event->description }}
                         </p>
 
                     </div>
-                    <div class="w-full sm:w-2/5 h-48 sm:h-auto relative flex-shrink-0">
+                    <div class="w-full sm:w-60 h-48 sm:h-full relative flex-shrink-0">
                         <img
-                            src="{{ asset($event->getImageUrl('medium')) }}"
+                            src="{{ $event->getImageUrl('medium') }}"
                             alt="{{ $event->name }}"
                             class="w-full h-full object-cover"
                         >

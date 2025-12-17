@@ -23,7 +23,7 @@ class Create extends Component
     protected $rules = [
         'title' => 'required|min:3|max:255',
         'description' => 'required|min:10',
-        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:3072|dimensions:min_width=200,min_height=200,max_width=4096,max_height=4096',
+        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:3072'
     ];
 
     protected $messages = [
