@@ -1,3 +1,3 @@
 <x-main-layout>
-    <h2>My Dashboard</h2>
+    @livewire('dashboard.index')
 </x-main-layout>
