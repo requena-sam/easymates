@@ -143,7 +143,8 @@
                                     class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
                                 </button>
                             </div>
@@ -159,7 +160,7 @@
                             <p class="text-sm text-gray-500 mt-2">
                                 <span class="font-semibold">Cliquer pour télécharger</span> ou glisser-déposer
                             </p>
-                            <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP jusqu'à 3MB</p>
+                            <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP jusqu'à 2MB</p>
                         @endif
                     </div>
                 </div>
@@ -197,8 +198,7 @@
                 wire:target="create"
                 class="px-6 py-3 rounded-xl bg-[var(--color-pink-700)] text-white hover:bg-[var(--color-pink-900)] transition font-medium disabled:opacity-50"
             >
-                <span wire:loading.remove wire:target="create">Publier</span>
-                <span wire:loading wire:target="create">Publication...</span>
+                <span wire:target="create">Publier</span>
             </button>
         </div>
 
