@@ -8,12 +8,9 @@ class MainNavigation extends Component
 {
     public array $links;
 
-    public function mount(){
+    public function mount()
+    {
         $this->links = [
-            'dashboard' => [
-                'text' => 'Dashboard',
-                'route' => 'dashboard',
-            ],
             'creations' => [
                 'text' => 'Créations',
                 'route' => 'creations',
@@ -28,6 +25,7 @@ class MainNavigation extends Component
             ]
         ];
     }
+
     public function render()
     {
         return view('livewire.nav.main-navigation');
