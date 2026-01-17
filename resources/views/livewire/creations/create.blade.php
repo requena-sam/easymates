@@ -1,6 +1,6 @@
-<div class="space-y-6">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ __('Add a new creation') }}</h2>
-    <form wire:submit.prevent="create" class="space-y-6">
+<div class="space-y-4 sm:space-y-6">
+    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('Add a new creation') }}</h2>
+    <form wire:submit.prevent="create" class="space-y-4 sm:space-y-6">
         <x-form.input-text id="title" placeholder="Choisir un titre pour votre creation" required="true">
             Titre de la creation
         </x-form.input-text>
@@ -9,43 +9,54 @@
             Description
         </x-form.text-area>
 
-        <!-- Upload d'image -->
+        {{-- Image --}}
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">
                 Image <span class="text-red-500">*</span>
             </label>
-            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-2xl hover:border-[var(--color-pink-700)] transition">
-                <div class="space-y-1 text-center w-full">
-                    @if ($image)
-                        <div class="mb-4 relative">
-                            <img src="{{ $image->temporaryUrl() }}" class="mx-auto max-h-64 w-auto rounded-lg shadow-lg">
-                            <button
-                                type="button"
-                                wire:click="$set('image', null)"
-                                class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    @else
-                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    @endif
 
-                    <div class="flex justify-center text-sm text-gray-600">
-                        <label for="image-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-[var(--color-pink-700)] hover:text-[var(--color-pink-900)] focus-within:outline-none">
-                            <span>{{ $image ? 'Changer l\'image' : 'Télécharger une image' }}</span>
-                            <input id="image-upload" type="file" wire:model.live="image" class="sr-only" accept="image/*">
-                        </label>
+            <label for="image-upload" class="cursor-pointer block">
+                <div
+                    class="flex items-center justify-center h-40 sm:h-48 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:bg-gray-100 transition">
+                    <div class="text-center px-4">
+                        @if ($image)
+                            <div class="relative inline-block">
+                                <img src="{{ $image->temporaryUrl() }}"
+                                     class="h-24 sm:h-32 mx-auto rounded-lg object-cover">
+                                <button
+                                    type="button"
+                                    wire:click.stop="$set('image', null)"
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">
+                                Cliquer pour changer
+                            </p>
+                        @else
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-gray-400" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                            <p class="text-xs sm:text-sm text-gray-500 mt-2">
+                                <span class="font-semibold">Cliquer pour télécharger</span>
+                                <span class="hidden sm:inline"> ou glisser-déposer</span>
+                            </p>
+                            <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP jusqu'à 2MB</p>
+                        @endif
                     </div>
-                    <p class="text-xs text-gray-500">PNG, JPG, WEBP jusqu'à 10MB - Haute qualité</p>
                 </div>
-            </div>
+            </label>
+
+            <input id="image-upload" type="file" wire:model.live="image" class="sr-only" accept="image/*">
 
             @error('image')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <span class="text-red-500 text-sm block mt-1">{{ $message }}</span>
             @enderror
         </div>
 
@@ -63,10 +74,11 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-pink-700)] focus:border-transparent transition text-sm">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3 p-4 overflow-y-auto"
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 p-3 sm:p-4 overflow-y-auto"
                      style="max-height: {{ count($filteredTags) > 6 ? '160px' : 'auto' }}">
                     @forelse($filteredTags as $tag)
-                        <label class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition">
+                        <label
+                            class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition">
                             <input
                                 type="checkbox"
                                 wire:model="tags"
@@ -75,23 +87,23 @@
                             <span class="text-sm">{{ ucwords(str_replace(['-', '_'], ' ', $tag->value)) }}</span>
                         </label>
                     @empty
-                        <p class="col-span-2 text-center text-gray-500 text-sm py-4">Aucun tag trouvé</p>
+                        <p class="col-span-1 sm:col-span-2 text-center text-gray-500 text-sm py-4">Aucun tag trouvé</p>
                     @endforelse
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-4">
+        <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-4">
             <button type="button"
                     wire:click="$dispatch('closeModal')"
-                    class="px-6 py-4 bg-[var(--color-pink-200)] rounded-2xl hover:bg-[var(--color-pink-300)] transition ease-in-out duration-300 font-medium">
+                    class="px-4 sm:px-6 py-3 sm:py-4 bg-[var(--color-pink-200)] rounded-2xl hover:bg-[var(--color-pink-300)] transition ease-in-out duration-300 font-medium text-center">
                 {{ __('Cancel') }}
             </button>
             <button type="submit"
                     wire:loading.attr="disabled"
                     wire:target="create"
-                    class="px-6 py-4 text-white bg-[var(--color-pink-700)] rounded-2xl hover:bg-[var(--color-pink-900)] transition ease-in-out duration-300 font-medium disabled:opacity-50 flex items-center gap-2">
-                <span >{{ __('Publish') }}</span>
+                    class="px-4 sm:px-6 py-3 sm:py-4 text-white bg-[var(--color-pink-700)] rounded-2xl hover:bg-[var(--color-pink-900)] transition ease-in-out duration-300 font-medium disabled:opacity-50 flex items-center justify-center gap-2">
+                <span>{{ __('Publish') }}</span>
             </button>
         </div>
     </form>
