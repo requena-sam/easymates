@@ -147,3 +147,16 @@ select:focus[data-flux-control] {
     animation: title-scroll 6s linear infinite;
 }
 
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.float-animation {
+    animation: float 8s ease-in-out infinite;
+}
+
