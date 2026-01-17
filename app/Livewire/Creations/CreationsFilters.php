@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Creations;
 
-use App\Enum\PostTags;
+use App\Enums\PostTags;
 use Livewire\Component;
 
 class CreationsFilters extends Component
