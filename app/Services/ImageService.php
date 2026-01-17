@@ -11,57 +11,130 @@ class ImageService
 {
     protected ImageManager $manager;
 
+    protected array $sizes = [
+        'small' => 400,
+        'medium' => 800,
+        'large' => 1200,
+    ];
+
     public function __construct()
     {
         $this->manager = new ImageManager(new Driver());
     }
 
-    public function storeResponsiveImage($file)
+    /**
+     * Store une seule image avec ses variantes
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @return string UUID de l'image
+     */
+    public function store($file): string
     {
         $uuid = Str::uuid()->toString();
-        $folder = "uploads/$uuid";
+        $folder = "images/$uuid";
+
         Storage::disk('public')->makeDirectory($folder);
 
         $img = $this->manager->read($file->getRealPath());
 
-        $sizes = [
-            'small' => 600,
-            'medium' => 1400,
-            'large' => 2400,
-        ];
+        $original = $img->toWebp(quality: 95);
+        Storage::disk('public')->put("$folder/original.webp", $original);
 
-        $paths = [];
-
-        foreach ($sizes as $sizeName => $width) {
+        foreach ($this->sizes as $sizeName => $width) {
             $resized = clone $img;
 
-            $originalWidth = $img->width();
-
-            if ($originalWidth > $width) {
+            if ($img->width() > $width) {
                 $resized->scale(width: $width);
             }
 
-            $filename = "$sizeName.webp";
-            $path = "$folder/$filename";
-
-            $encoded = $resized->toWebp(quality: 99);
-
-            Storage::disk('public')->put($path, $encoded, 'public');
-
-            $paths[$sizeName] = "storage/$path";
+            $encoded = $resized->toWebp(quality: 90);
+            Storage::disk('public')->put("$folder/$sizeName.webp", $encoded);
         }
 
-        return [
-            'folder' => $folder,
-            'sizes' => $paths,
-            'original' => $paths['large'],
-        ];
+        return $uuid;
     }
 
-    public function deleteResponsiveImages($folder)
+    /**
+     * Store plusieurs images
+     *
+     * @param array $files
+     * @return array Tableau d'UUIDs
+     */
+    public function storeMultiple(array $files): array
     {
-        if ($folder && Storage::disk('public')->exists($folder)) {
-            Storage::disk('public')->deleteDirectory($folder);
+        $uuids = [];
+
+        foreach ($files as $file) {
+            $uuids[] = $this->store($file);
         }
+
+        return $uuids;
+    }
+
+    /**
+     * Supprimer une image et toutes ses variantes
+     *
+     * @param string $uuid
+     * @return bool
+     */
+    public function delete(string $uuid): bool
+    {
+        $folder = "images/$uuid";
+
+        if (Storage::disk('public')->exists($folder)) {
+            return Storage::disk('public')->deleteDirectory($folder);
+        }
+
+        return false;
+    }
+
+    /**
+     * Supprimer plusieurs images
+     *
+     * @param array $uuids
+     * @return void
+     */
+    public function deleteMultiple(array $uuids): void
+    {
+        foreach ($uuids as $uuid) {
+            $this->delete($uuid);
+        }
+    }
+
+    /**
+     * Obtenir l'URL d'une image avec une taille spécifique
+     *
+     * @param string $uuid
+     * @param string $size (small|medium|large|original)
+     * @return string|null
+     */
+    public function getUrl(string $uuid, string $size = 'medium'): ?string
+    {
+        $path = "images/$uuid/$size.webp";
+
+        if (Storage::disk('public')->exists($path)) {
+            return asset("storage/$path");
+        }
+
+        return null;
+    }
+
+    /**
+     * Obtenir toutes les URLs d'une image
+     *
+     * @param string $uuid
+     * @return array
+     */
+    public function getAllUrls(string $uuid): array
+    {
+        $urls = [];
+
+        foreach (array_keys($this->sizes) as $size) {
+            $urls[$size] = $this->getUrl($uuid, $size);
+        }
+
+        $urls['original'] = $this->getUrl($uuid, 'original');
+
+        return $urls;
     }
 }

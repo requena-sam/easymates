@@ -3,6 +3,7 @@
 namespace App\Livewire\Creations;
 
 use App\Models\Creation;
+use App\Services\NotificationService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -10,6 +11,7 @@ class Show extends Component
 {
     public $creation;
     public $creationId;
+    public $isLiked = false;
 
     public function mount($creationId)
     {
@@ -20,6 +22,7 @@ class Show extends Component
     public function loadCreation()
     {
         $this->creation = Creation::with('user')->findOrFail($this->creationId);
+        $this->isLiked = $this->creation->isLikedByUser(auth()->id());
     }
 
     #[On('creationUpdated')]
@@ -28,19 +31,13 @@ class Show extends Component
         $this->loadCreation();
     }
 
-    public function delete()
+    public function toggleLike()
     {
-        $creation = Creation::findOrFail($this->creationId);
-        $creation->delete();
-
-        $this->dispatch('closeModal');
-        $this->dispatch('creationDeleted');
-        $this->dispatch('showAlert', [
-            'type' => 'success',
-            'message' => 'Création supprimée avec succès!'
-        ]);
-        redirect()->route('creations');
+        $this->isLiked = $this->creation->toggleLike(auth()->id());
+        NotificationService::notifyLike($this->creation->user_id, auth()->id(), $this->creation->id);
+        $this->dispatch('refreshCreationsList');
     }
+
 
     public function render()
     {

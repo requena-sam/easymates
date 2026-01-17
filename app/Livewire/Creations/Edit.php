@@ -4,21 +4,26 @@ namespace App\Livewire\Creations;
 
 use App\Enum\PostTags;
 use App\Models\Creation;
+use App\Traits\HasImages;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    use WithFileUploads, HasImages;
+
     public $creationId;
     public $title;
     public $description;
     public $image;
+    public $currentImageUuid;
     public $tags = [];
     public $searchTag = '';
 
     protected $rules = [
         'title' => 'required|min:3|max:255',
         'description' => 'required|min:10',
-        'image' => 'required',
+        'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
         'tags' => 'array',
     ];
 
@@ -26,11 +31,15 @@ class Edit extends Component
     {
         $this->creationId = $creationId;
         $creation = Creation::findOrFail($creationId);
-
         $this->title = $creation->title;
         $this->description = $creation->description;
-        $this->image = $creation->image;
+        $this->currentImageUuid = $creation->image_uuid;
         $this->tags = $creation->tags ?? [];
+    }
+
+    public function updatedImage()
+    {
+        $this->validateOnly('image');
     }
 
     public function getFilteredTags()
@@ -59,18 +68,28 @@ class Edit extends Component
         }
 
         try {
-            $creation->update([
+            $updateData = [
                 'title' => $this->title,
                 'description' => $this->description,
-                'image' => $this->image,
                 'tags' => $this->tags,
-            ]);
+            ];
+
+            if ($this->image) {
+                if ($creation->image_uuid) {
+                    $this->deleteImage($creation->image_uuid);
+                }
+                $updateData['image_uuid'] = $this->uploadImage($this->image);
+            }
+
+            $creation->update($updateData);
 
             $this->dispatch('closeEditModal');
             $this->dispatch('creationUpdated');
+            $this->dispatch('refreshCreationsList');
             $this->dispatch('notifyAlert', message: 'Création mise à jour avec succès!', type: 'success');
 
         } catch (\Exception $e) {
+            \Log::error('Erreur modification: ' . $e->getMessage());
             $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la modification.', type: 'error');
         }
     }

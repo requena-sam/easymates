@@ -1,7 +1,9 @@
 <?php
 
+
 namespace App\Models;
 
+use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +20,7 @@ class Event extends Model
         'start_date',
         'end_date',
         'description',
-        'image_path',
+        'image_uuid',
         'official_ticketing_link',
         'secondary_ticketing_link',
     ];
@@ -26,7 +28,6 @@ class Event extends Model
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'image_path' => 'array',
     ];
 
     public function coHostingAnnouncements(): HasMany
@@ -39,27 +40,33 @@ class Event extends Model
         return $this->hasMany(Carpool::class);
     }
 
-    public function getImageUrl($size = 'medium')
-    {
-        $imagePath = is_array($this->image_path)
-            ? $this->image_path
-            : json_decode($this->image_path, true);
 
-        if (!$imagePath || !isset($imagePath['sizes'][$size])) {
+    public function getImageUrl(string $size = 'medium'): ?string
+    {
+        if (!$this->image_uuid) {
             return null;
         }
 
-        return asset($imagePath['sizes'][$size]);
-    }
-
-    public function getImageSizes()
-    {
-        return $this->image_path['sizes'] ?? [];
+        return app(ImageService::class)->getUrl($this->image_uuid, $size);
     }
 
 
-    public function getImageFolder()
+    public function getImageUrls(): array
     {
-        return $this->image_path['folder'] ?? null;
+        if (!$this->image_uuid) {
+            return [];
+        }
+
+        return app(ImageService::class)->getAllUrls($this->image_uuid);
+    }
+
+
+    protected static function booted()
+    {
+        static::deleting(function ($event) {
+            if ($event->image_uuid) {
+                app(ImageService::class)->delete($event->image_uuid);
+            }
+        });
     }
 }
