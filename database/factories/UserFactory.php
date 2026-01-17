@@ -28,7 +28,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
             'remember_token' => Str::random(10),
-            'profile_picture' => 'https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png',
         ];
     }
 
