@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Creation extends Model
 {
-    /** @use HasFactory<\Database\Factories\CreationFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -15,14 +15,13 @@ class Creation extends Model
         'title',
         'description',
         'tags',
-        'image_path',
+        'image_uuid',
         'likes_count',
         'comments_count',
     ];
 
     protected $casts = [
         'tags' => 'array',
-        'image_path' => 'array',
     ];
 
     public function user()
@@ -35,26 +34,61 @@ class Creation extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function getImageUrl($size = 'medium')
+    public function likes()
     {
-        $imagePath = is_array($this->image_path)
-            ? $this->image_path
-            : json_decode($this->image_path, true);
+        return $this->hasMany(Like::class);
+    }
 
-        if (!$imagePath || !isset($imagePath['sizes'][$size])) {
+
+    public function isLikedByUser($userId): bool
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
+
+
+    public function toggleLike($userId): bool
+    {
+        $like = $this->likes()->where('user_id', $userId)->first();
+
+        if ($like) {
+            // Unlike
+            $like->delete();
+            $this->decrement('likes_count');
+            return false;
+        } else {
+            // Like
+            $this->likes()->create(['user_id' => $userId]);
+            $this->increment('likes_count');
+            return true;
+        }
+    }
+
+
+    public function getImageUrl(string $size = 'medium'): ?string
+    {
+        if (!$this->image_uuid) {
             return null;
         }
 
-        return asset($imagePath['sizes'][$size]);
+        return app(ImageService::class)->getUrl($this->image_uuid, $size);
     }
 
-    public function getImageSizes()
+
+    public function getImageUrls(): array
     {
-        return $this->image_path['sizes'] ?? [];
+        if (!$this->image_uuid) {
+            return [];
+        }
+
+        return app(ImageService::class)->getAllUrls($this->image_uuid);
     }
 
-    public function getImageFolder()
+    protected static function booted()
     {
-        return $this->image_path['folder'] ?? null;
+        static::deleting(function ($creation) {
+            if ($creation->image_uuid) {
+                app(ImageService::class)->delete($creation->image_uuid);
+            }
+        });
     }
 }

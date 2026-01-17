@@ -62,7 +62,7 @@ class CreationsList extends Component
         return $query->paginate(16);
     }
 
-    #[On('creationAdded')]
+    #[On('refreshCreationsList')]
     public function refreshCreations()
     {
         unset($this->creations);

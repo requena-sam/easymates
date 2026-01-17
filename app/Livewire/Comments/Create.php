@@ -4,6 +4,7 @@ namespace App\Livewire\Comments;
 
 use App\Models\Comment;
 use App\Models\Creation;
+use App\Services\NotificationService;
 use Livewire\Component;
 
 class Create extends Component
@@ -24,17 +25,20 @@ class Create extends Component
     {
         $this->validate();
 
-        $comment = Comment::create([
+        Comment::create([
             'creation_id' => $this->creationId,
             'user_id' => auth()->id(),
             'content' => $this->content,
         ]);
 
-        Creation::find($this->creationId)->increment('comments_count');
+
+        $creation = Creation::find($this->creationId);
+        $creation->increment('comments_count');
 
         $this->reset('content');
-
+        NotificationService::notifyComment($creation->user_id, auth()->id(), $this->creationId);
         $this->dispatch('commentAdded');
+        $this->dispatch('notifyAlert', message: "Votre commentaire a été ajouté avec succès.", type: 'success');
     }
 
     public function render()

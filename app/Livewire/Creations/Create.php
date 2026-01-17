@@ -23,20 +23,7 @@ class Create extends Component
     protected $rules = [
         'title' => 'required|min:3|max:255',
         'description' => 'required|min:10',
-        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:3072'
-    ];
-
-    protected $messages = [
-        'title.required' => 'Le titre est requis.',
-        'title.min' => 'Le titre doit contenir au moins 3 caractères.',
-        'title.max' => 'Le titre ne doit pas dépasser 255 caractères.',
-        'description.required' => 'La description est requise.',
-        'description.min' => 'La description doit contenir au moins 10 caractères.',
-        'image.required' => 'Une image est requise.',
-        'image.image' => 'Le fichier doit être une image valide.',
-        'image.max' => 'L\'image ne doit pas dépasser 3 Mo.',
-        'image.mimes' => 'L\'image doit être au format JPEG, JPG, PNG ou WEBP.',
-        'image.dimensions' => 'L\'image doit avoir une taille minimale de 200x200 pixels et maximale de 4096x4096 pixels.',
+        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048'
     ];
 
     public function updatedImage()
@@ -49,18 +36,18 @@ class Create extends Component
         $this->validate();
 
         try {
-            $imageData = $this->handleImageUpload($this->image);
+            $imageUuid = $this->uploadImage($this->image);
 
             Creation::create([
                 'title' => $this->title,
                 'description' => $this->description,
-                'image_path' => json_encode($imageData),
+                'image_uuid' => $imageUuid,
                 'tags' => $this->tags,
                 'user_id' => auth()->id(),
             ]);
 
             $this->dispatch('closeModal');
-            $this->dispatch('creationAdded');
+            $this->dispatch('refreshCreationsList');
             $this->dispatch('notifyAlert', message: 'Création publiée avec succès !', type: 'success');
             $this->resetForm();
 

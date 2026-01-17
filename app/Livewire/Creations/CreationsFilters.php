@@ -62,7 +62,7 @@ class CreationsFilters extends Component
 
     public function getSortLabel()
     {
-        return match($this->sortBy) {
+        return match ($this->sortBy) {
             'most_liked' => __('Most Liked'),
             'oldest' => __('Oldest'),
             default => __('Latest'),

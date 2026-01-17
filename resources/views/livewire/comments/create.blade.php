@@ -2,9 +2,8 @@
     <form wire:submit="submit">
         <div class="flex gap-3">
             <figure class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                <img src="{{ auth()->user()->profile_picture }}"
-                     alt="{{ auth()->user()->name }}"
-                     class="object-cover w-full h-full">
+                <img src="{{auth()->user()->getProfilePictureUrl('small')}}" alt="{{auth()->user()->name}}"
+                     class="object-cover object-top w-full h-full"/>
             </figure>
 
             <div class="flex-1 relative">

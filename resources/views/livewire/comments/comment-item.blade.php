@@ -2,9 +2,8 @@
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
             <figure class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                <img src="{{ $comment->user->profile_picture }}"
-                     alt="{{ $comment->user->name }}"
-                     class="object-cover w-full h-full">
+                <img src="{{$comment->user->getProfilePictureUrl('small')}}" alt="{{$comment->user->name}}"
+                     class="object-cover object-top w-full h-full"/>
             </figure>
             <p class="font-medium">{{ $comment->user->name }}</p>
         </div>
