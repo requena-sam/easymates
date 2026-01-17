@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Creations;
 
-use App\Enum\PostTags;
+use App\Enums\PostTags;
 use App\Models\Creation;
 use App\Traits\HasImages;
 use Livewire\Component;
