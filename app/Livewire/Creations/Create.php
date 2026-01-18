@@ -5,12 +5,13 @@ namespace App\Livewire\Creations;
 use App\Enums\PostTags;
 use App\Models\Creation;
 use App\Traits\HasImages;
+use App\Traits\CreationValidation;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use WithFileUploads, HasImages;
+    use WithFileUploads, HasImages, CreationValidation;
 
     public $title;
     public $description;
@@ -19,12 +20,6 @@ class Create extends Component
     public $searchTag = '';
 
     protected $listeners = ['modalClosed' => 'resetForm'];
-
-    protected $rules = [
-        'title' => 'required|min:3|max:255',
-        'description' => 'required|min:10',
-        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048'
-    ];
 
     public function updatedImage()
     {
@@ -48,12 +43,11 @@ class Create extends Component
 
             $this->dispatch('closeModal');
             $this->dispatch('refreshCreationsList');
-            $this->dispatch('notifyAlert', message: 'Création publiée avec succès !', type: 'success');
+            $this->sendSuccess('Création publiée avec succès !');
             $this->resetForm();
 
         } catch (\Exception $e) {
-            \Log::error('Erreur création: ' . $e->getMessage());
-            $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la publication.', type: 'error');
+            $this->sendError('Une erreur est survenue lors de la publication.');
         }
     }
 

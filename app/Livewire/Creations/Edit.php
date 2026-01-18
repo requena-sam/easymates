@@ -5,12 +5,13 @@ namespace App\Livewire\Creations;
 use App\Enums\PostTags;
 use App\Models\Creation;
 use App\Traits\HasImages;
+use App\Traits\CreationValidation;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
-    use WithFileUploads, HasImages;
+    use WithFileUploads, HasImages, CreationValidation;
 
     public $creationId;
     public $title;
@@ -20,12 +21,16 @@ class Edit extends Component
     public $tags = [];
     public $searchTag = '';
 
-    protected $rules = [
-        'title' => 'required|min:3|max:255',
-        'description' => 'required|min:10',
-        'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
-        'tags' => 'array',
-    ];
+    // Override rules pour l'édition (image nullable)
+    protected function rules()
+    {
+        return [
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:10',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+            'tags' => 'array',
+        ];
+    }
 
     public function mount($creationId)
     {
@@ -63,7 +68,7 @@ class Edit extends Component
         $creation = Creation::findOrFail($this->creationId);
 
         if ($creation->user_id !== auth()->id()) {
-            $this->dispatch('notifyAlert', message: 'Vous n\'êtes pas autorisé à modifier cette création.', type: 'error');
+            $this->sendError('Vous n\'êtes pas autorisé à modifier cette création.');
             return;
         }
 
@@ -86,11 +91,10 @@ class Edit extends Component
             $this->dispatch('closeEditModal');
             $this->dispatch('creationUpdated');
             $this->dispatch('refreshCreationsList');
-            $this->dispatch('notifyAlert', message: 'Création mise à jour avec succès!', type: 'success');
+            $this->sendSuccess('Création mise à jour avec succès!');
 
         } catch (\Exception $e) {
-            \Log::error('Erreur modification: ' . $e->getMessage());
-            $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la modification.', type: 'error');
+            $this->sendError('Une erreur est survenue lors de la modification.');
         }
     }
 
