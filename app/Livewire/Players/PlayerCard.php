@@ -14,6 +14,8 @@ class PlayerCard extends Component
     {
         $this->player = $player;
     }
+
+    #[On('playerUpdated')]
     public function refreshList()
     {
         $this->render();
