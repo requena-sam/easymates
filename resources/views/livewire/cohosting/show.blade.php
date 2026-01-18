@@ -1,5 +1,4 @@
 <div class="max-w-full px-4 sm:px-0">
-    {{-- Boutons d'actions --}}
     <div class="flex justify-end gap-2">
         @if($coHosting->user_id === auth()->id())
             <button
@@ -38,7 +37,6 @@
         @endrole
     </div>
 
-    {{-- Header avec auteur --}}
     <div class="flex gap-3 sm:gap-4 items-center mb-4 sm:mb-6">
         <figure class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden flex-shrink-0">
             <img src="{{$coHosting->user->getProfilePictureUrl('small')}}" alt=""
@@ -50,7 +48,6 @@
         </div>
     </div>
 
-    {{-- Slider d'images avec Alpine.js --}}
     @php
         $imageUrls = $coHosting->getImageUrls('large');
         $imageCount = count($imageUrls);
@@ -66,8 +63,8 @@
             }"
             class="relative mb-4 sm:mb-6"
         >
-            {{-- Container des images --}}
-            <div class="relative w-full rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
+            <div
+                class="relative w-full h-64 sm:h-96 lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
                 @foreach($imageUrls as $index => $imageUrl)
                     <div
                         x-show="current === {{ $index }}"
@@ -78,51 +75,49 @@
                         x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0"
                         class="absolute inset-0 flex items-center justify-center"
-                        style="display: none;"
                     >
                         <img
                             src="{{ $imageUrl }}"
                             alt="{{ $coHosting->title }} - Image {{ $index + 1 }}"
-                            class="max-w-full max-h-full object-contain"
+                            class="w-full h-full object-contain"
+                            loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
                         >
                     </div>
                 @endforeach
             </div>
 
-            {{-- Boutons navigation (seulement si plus d'une image) --}}
             @if($imageCount > 1)
-                {{-- Bouton précédent --}}
                 <button
                     @click="prev()"
                     class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 sm:p-3 shadow-lg transition z-10"
+                    aria-label="Image précédente"
                 >
                     <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
 
-                {{-- Bouton suivant --}}
                 <button
                     @click="next()"
                     class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 sm:p-3 shadow-lg transition z-10"
+                    aria-label="Image suivante"
                 >
                     <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
 
-                {{-- Indicateurs de pagination --}}
                 <div class="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
                     @foreach($imageUrls as $index => $imageUrl)
                         <button
                             @click="current = {{ $index }}"
                             class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition"
                             :class="current === {{ $index }} ? 'bg-white w-4 sm:w-6' : 'bg-white/50 hover:bg-white/75'"
+                            aria-label="Aller à l'image {{ $index + 1 }}"
                         ></button>
                     @endforeach
                 </div>
 
-                {{-- Compteur --}}
                 <div
                     class="absolute top-3 sm:top-4 right-3 sm:right-4 bg-black/50 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm z-10">
                     <span x-text="current + 1"></span> / {{ $imageCount }}
@@ -131,11 +126,8 @@
         </div>
     @endif
 
-    {{-- Contenu principal --}}
     <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 sm:gap-8 mt-4 sm:mt-6">
-        {{-- Colonne gauche - Informations principales --}}
         <div class="flex flex-col gap-4 sm:gap-6">
-            {{-- Infos rapides --}}
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 <div class="bg-[var(--color-pink-50)] rounded-lg sm:rounded-xl p-3 sm:p-4">
                     <p class="text-xs text-gray-600 mb-1">Places</p>
@@ -153,13 +145,11 @@
                 </div>
             </div>
 
-            {{-- Description --}}
             <div class="flex flex-col gap-2 sm:gap-3">
                 <h3 class="font-semibold text-lg sm:text-xl text-gray-900">Description</h3>
                 <p class="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-wrap">{{ $coHosting->description }}</p>
             </div>
 
-            {{-- Message de l'auteur --}}
             @if($coHosting->author_message)
                 <div class="flex flex-col gap-2 sm:gap-3 bg-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
                     <h3 class="font-semibold text-base sm:text-lg text-gray-900 flex items-center gap-2">
@@ -174,7 +164,6 @@
                 </div>
             @endif
 
-            {{-- Adresse --}}
             <div class="flex flex-col gap-2 sm:gap-3">
                 <h3 class="font-semibold text-lg sm:text-xl text-gray-900 flex items-center gap-2">
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,9 +178,7 @@
             </div>
         </div>
 
-        {{-- Colonne droite - Contact et liens --}}
         <div class="lg:sticky lg:top-4 h-fit space-y-4 sm:space-y-6">
-            {{-- Lien de l'annonce --}}
             @if($coHosting->listing_link)
                 <a href="{{ $coHosting->listing_link }}" target="_blank"
                    class="block w-full px-4 sm:px-6 py-3 sm:py-4 bg-[var(--color-pink-700)] text-white text-center text-sm sm:text-base rounded-xl sm:rounded-2xl hover:bg-[var(--color-pink-900)] transition font-medium">
@@ -199,7 +186,6 @@
                 </a>
             @endif
 
-            {{-- Informations de contact --}}
             @if($coHosting->whatsapp || $coHosting->discord || $coHosting->twitter || $coHosting->instagram)
                 <div class="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4">
                     <h3 class="font-semibold text-base sm:text-lg text-gray-900">Contact</h3>
