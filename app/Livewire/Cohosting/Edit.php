@@ -9,11 +9,12 @@ use App\Traits\ManagesMultipleImages;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Create extends Component
+class Edit extends Component
 {
     use WithFileUploads, HasImages, CoHostingValidation, ManagesMultipleImages;
 
-    public $event_id;
+    public $coHostingId;
+    public $coHosting;
     public $title;
     public $description;
     public $author_message;
@@ -32,12 +33,37 @@ class Create extends Component
 
     public function mount($elementId)
     {
-        $this->event_id = $elementId;
+        $this->coHostingId = $elementId;
+        $this->coHosting = CoHosting::findOrFail($elementId);
+
+        if ($this->coHosting->user_id !== auth()->id()) {
+            abort(403, 'Action non autorisée.');
+        }
+
+        $this->loadExistingData();
+    }
+
+    protected function loadExistingData()
+    {
+        $this->title = $this->coHosting->title;
+        $this->description = $this->coHosting->description;
+        $this->author_message = $this->coHosting->author_message;
+        $this->existingImages = $this->coHosting->image_uuids ?? [];
+        $this->available_spots = $this->coHosting->available_spots;
+        $this->price_per_person = $this->coHosting->price_per_person;
+        $this->address = $this->coHosting->address;
+        $this->start_date = $this->coHosting->start_date;
+        $this->end_date = $this->coHosting->end_date;
+        $this->listing_link = $this->coHosting->listing_link;
+        $this->whatsapp = $this->coHosting->whatsapp;
+        $this->discord = $this->coHosting->discord;
+        $this->twitter = $this->coHosting->twitter;
+        $this->instagram = $this->coHosting->instagram;
     }
 
     protected function rules()
     {
-        return $this->getCoHostingRules();
+        return $this->getCoHostingEditRules();
     }
 
     protected function messages()
@@ -50,9 +76,8 @@ class Create extends Component
         return $this->getCoHostingAttributes();
     }
 
-    public function create()
+    public function update()
     {
-        // Valider le nombre d'images
         if (!$this->validateTotalImages()) {
             return;
         }
@@ -60,15 +85,13 @@ class Create extends Component
         $this->validate();
 
         try {
-            $imageUuids = $this->getAllImageUuids();
+            $allImageUuids = $this->getAllImageUuids();
 
-            CoHosting::create([
-                'event_id' => $this->event_id,
-                'user_id' => auth()->id(),
+            $this->coHosting->update([
                 'title' => $this->title,
                 'description' => $this->description,
                 'author_message' => $this->author_message,
-                'image_uuids' => $imageUuids,
+                'image_uuids' => $allImageUuids,
                 'available_spots' => (int)$this->available_spots,
                 'price_per_person' => $this->price_per_person,
                 'address' => $this->address,
@@ -82,14 +105,13 @@ class Create extends Component
             ]);
 
             $this->dispatch('closeModal');
-            $this->dispatch('coHostingAdded');
-            $this->dispatch('notifyAlert', message: 'Annonce publiée avec succès !', type: 'success');
-            $this->resetForm();
+            $this->dispatch('coHostingUpdated');
+            $this->dispatch('notifyAlert', message: 'Annonce modifiée avec succès !', type: 'success');
 
         } catch (\Exception $e) {
-            \Log::error('Erreur création co-hosting: ' . $e->getMessage());
+            \Log::error('Erreur modification co-hosting: ' . $e->getMessage());
             \Log::error('Stack trace: ' . $e->getTraceAsString());
-            $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la publication.', type: 'error');
+            $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la modification.', type: 'error');
         }
     }
 
@@ -117,6 +139,6 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.cohosting.create');
+        return view('livewire.cohosting.edit');
     }
 }

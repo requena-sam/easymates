@@ -14,7 +14,7 @@
             </button>
         @else
             <button
-                wire:click="$dispatch('openEditModal', { component: 'cohosting.report-cohosting', coHostingId: {{ $coHosting->id }} })"
+                wire:click="$dispatch('openEditModal', { component: 'cohosting.report-co-hosting', coHostingId: {{ $coHosting->id }} })"
                 class="static sm:absolute sm:-top-12 sm:right-12 z-10 p-2 mb-4 sm:p-2.5 bg-red-500 text-white rounded-full hover:bg-red-600"
                 title="Signaler ce co-hébergement">
                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

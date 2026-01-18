@@ -2,7 +2,6 @@
     <h2 class="text-2xl font-bold text-gray-900 mb-6">Signaler ce co-hébergement</h2>
 
     <form wire:submit.prevent="submit" class="space-y-6">
-        <!-- Raison du signalement -->
         <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">
                 Raison du signalement <span class="text-red-500">*</span>
