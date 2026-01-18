@@ -25,16 +25,5 @@ class DatabaseSeeder extends Seeder
 
         $admin->assignRole('admin');
         $this->call(EventSeeder::class);
-
-
-        User::factory(10)->create();
-        Creation::factory(10)->create();
-        Creation::factory(5)->create([
-            'user_id' => $admin->id,
-        ]);
-        Comment::factory(25)->create([]);
-        $this->call(CoHostingSeeder::class);
-        $this->call(PlayerSeeder::class);
-        $this->call(NotificationSeeder::class);
     }
 }
