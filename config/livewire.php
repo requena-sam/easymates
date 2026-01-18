@@ -64,9 +64,9 @@ return [
     */
 
     'temporary_file_upload' => [
-        'disk' => null,
+        'disk' => 'local',
         'rules' => null,
-        'directory' => null,
+        'directory' => 'livewire-tmp',
         'middleware' => null,
         'preview_mimes' => [
             'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
