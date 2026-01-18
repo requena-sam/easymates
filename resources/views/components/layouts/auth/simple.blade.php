@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @include('partials.head')
 </head>
-<body class="min-h-screen bg-white antialiased dark:bg-neutral-950 overflow-hidden">
+<body class="min-h-screen bg-white antialiased overflow-hidden">
 <div class="absolute inset-0 -z-10">
     <div class="absolute top-0 -left-100 w-140 h-140 rounded-full bg-pink-400/40 blur-3xl"></div>
     <div class="absolute bottom-0 -right-100 w-140 h-140 rounded-full bg-pink-400/40 blur-3xl"></div>
@@ -14,7 +14,7 @@
                 <span class="flex h-16 w-16 mb-1 items-center justify-center rounded-md">
                 <img src="{{ asset('storage/images/logo_gentlemates-12.svg') }}" alt="Logo du site">
                 </span>
-            <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
+            <span class="sr-only">{{ config('app.name', 'Easy Mates') }}</span>
         </a>
         <div class="flex flex-col gap-6">
             {{ $slot }}

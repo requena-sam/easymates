@@ -81,7 +81,6 @@
     }
 }
 
-/* ✅ Compatibilité Flux */
 [data-flux-field]:not(ui-radio, ui-checkbox) {
     @apply grid gap-2;
 }

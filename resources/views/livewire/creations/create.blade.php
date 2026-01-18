@@ -83,7 +83,7 @@
                                 type="checkbox"
                                 wire:model="tags"
                                 value="{{ $tag->value }}"
-                                class="w-4 h-4 text-[var(--color-pink-700)] border-gray-300 rounded focus:ring-[var(--color-pink-700)]">
+                                class="scheme-normal w-4 h-4 text-[var(--color-pink-700)] border-gray-300 rounded focus:ring-[var(--color-pink-700)]">
                             <span class="text-sm">{{ ucwords(str_replace(['-', '_'], ' ', $tag->value)) }}</span>
                         </label>
                     @empty
