@@ -1,6 +1,6 @@
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 mt-12 sm:mt-16">
     <div class="mb-8 sm:mb-12">
-        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">Nos Joueurs</h1>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">Nos Joueurs</h2>
         <p class="text-gray-600 text-base sm:text-lg">Découvrez les talents qui représentent Gentle Mates</p>
         @role('moderator|admin')
         <div class="mt-4 sm:mt-6">

@@ -3,7 +3,7 @@
 <!-- Open Graph -->
 <meta property="og:title" content="Easy Mates">
 <meta property="og:description"
-      content="L’application qui facilite la vie des fans de Gentle Mates. Partage tes créations, prévois tes événemments et restent connecté avec tous les joueurs de la structure !.">
+      content="L’application qui facilite la vie des fans de Gentle Mates. Partage tes créations, prévois tes événemments et restent connecté avec tous les joueurs de la structure !">
 <meta property="og:image" content="{{ asset('storage/images/og-image.png') }}">
 <meta property="og:url" content="https://easymate.fr">
 <meta property="og:type" content="website">
@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Easy Mates">
 <meta name="twitter:description" content="Facilite ta vie en tant que fan de Gentle Mates.">
-<meta name="twitter:image" content="{{ asset('storage/images/logo_gentlemates.png') }}">
+<meta name="twitter:image" content="{{ asset('storage/images/og-image.png') }}">
 
 
 <title>{{ config('app.name') }}</title>

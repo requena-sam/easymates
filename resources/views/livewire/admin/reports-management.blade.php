@@ -1,4 +1,42 @@
 <div class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">Total signalements</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $reports->total() }}</p>
+                </div>
+                <div
+                    class="w-11 h-11 bg-[var(--color-pink-100)] rounded-xl flex items-center justify-center text-[var(--color-primary)]">
+                    <x-icons.warning></x-icons.warning>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">En attente</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Report::where('status', 'pending')->count() }}</p>
+                </div>
+                <div class="w-11 h-11 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600">
+                    <x-icons.clock></x-icons.clock>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">Traités</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Report::where('status', 'resolved')->count() }}</p>
+                </div>
+                <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                    <x-icons.check></x-icons.check>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <div class="relative flex-1 max-w-md">
@@ -175,45 +213,6 @@
                 {{ $reports->links() }}
             </div>
         @endif
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">Total signalements</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $reports->total() }}</p>
-                </div>
-                <div
-                    class="w-11 h-11 bg-[var(--color-pink-100)] rounded-xl flex items-center justify-center text-[var(--color-primary)]">
-                    <x-icons.warning></x-icons.warning>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">En attente</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Report::where('status', 'pending')->count() }}</p>
-                </div>
-                <div class="w-11 h-11 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600">
-                    <x-icons.clock></x-icons.clock>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">Traités</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Report::where('status', 'resolved')->count() }}</p>
-                </div>
-                <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
-                    <x-icons.check></x-icons.check>
-                </div>
-            </div>
-        </div>
     </div>
     @livewire('components.modal')
 </div>

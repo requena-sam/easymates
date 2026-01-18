@@ -1,4 +1,41 @@
 <div class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">Total logs</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $logs->total() }}</p>
+                </div>
+                <div
+                    class="w-11 h-11 bg-[var(--color-pink-100)] rounded-xl flex items-center justify-center text-[var(--color-primary)]">
+                    <x-icons.sheet></x-icons.sheet>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">Suppressions</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\ModerationLog::where('type', 'deletion')->count() }}</p>
+                </div>
+                <div class="w-11 h-11 bg-red-100 rounded-xl flex items-center justify-center text-red-600">
+                    <x-icons.delete strokeWidth="2"></x-icons.delete>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-600 mb-1">Signalements traités</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\ModerationLog::where('type', 'report')->count() }}</p>
+                </div>
+                <div class="w-11 h-11 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600">
+                    <x-icons.warning></x-icons.warning>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
         <h2 class="sr-only">{{__('Filters section')}}</h2>
         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
@@ -166,43 +203,4 @@
             </div>
         @endif
     </section>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">Total logs</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $logs->total() }}</p>
-                </div>
-                <div
-                    class="w-11 h-11 bg-[var(--color-pink-100)] rounded-xl flex items-center justify-center text-[var(--color-primary)]">
-                    <x-icons.sheet></x-icons.sheet>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">Suppressions</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\ModerationLog::where('type', 'deletion')->count() }}</p>
-                </div>
-                <div class="w-11 h-11 bg-red-100 rounded-xl flex items-center justify-center text-red-600">
-                    <x-icons.delete strokeWidth="2"></x-icons.delete>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-100">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs text-gray-600 mb-1">Signalements traités</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\ModerationLog::where('type', 'report')->count() }}</p>
-                </div>
-                <div class="w-11 h-11 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600">
-                    <x-icons.warning></x-icons.warning>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
