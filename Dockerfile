@@ -8,14 +8,13 @@ RUN apk add --no-cache nodejs npm
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
-
 COPY package.json package-lock.json ./
+
 RUN npm install --frozen-lockfile
 
-RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
-
 COPY --chown=www-data:www-data . .
+
+RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
 RUN mkdir -p storage  \
     && chown -R www-data:www-data storage \
