@@ -30,28 +30,6 @@ class ReportsManagement extends Component
         $this->resetPage();
     }
 
-    public function viewReportable(int $reportId): void
-    {
-        $report = Report::with('reportable')->findOrFail($reportId);
-
-        $component = match (class_basename($report->reportable_type)) {
-            'Creation' => 'creations.show',
-            'CoHosting' => 'cohosting.show',
-            default => null,
-        };
-
-        if ($component) {
-            $paramName = class_basename($report->reportable_type) === 'Creation'
-                ? 'creationId'
-                : 'coHostingId';
-
-            $this->dispatch('openEditModal', [
-                'component' => $component,
-                $paramName => $report->reportable_id
-            ]);
-        }
-    }
-
     public function markAsResolved(int $reportId, ReportService $reportService): void
     {
         $report = Report::findOrFail($reportId);

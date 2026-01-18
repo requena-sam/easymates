@@ -124,17 +124,25 @@
 
                         <td class="px-6 py-3">
                             <div class="flex items-center gap-2">
-                                @if($type === 'Creation')
+                                @if($report->reportable)
+                                    @if($type === 'Creation')
+                                        <button
+                                            wire:click="$dispatch('openModal', { component: 'creations.show', size: 'large', creationId: {{ $report->reportable_id }} })"
+                                            class="px-3 py-1.5 bg-[var(--color-pink-700)] text-white rounded-lg text-xs hover:bg-[var(--color-pink-900)] transition">
+                                            Voir
+                                        </button>
+                                    @elseif($type === 'CoHosting')
+                                        <button
+                                            wire:click="$dispatch('openModal', { component: 'cohosting.show', size: 'large', coHostingId: {{ $report->reportable_id }} })"
+                                            class="px-3 py-1.5 bg-[var(--color-pink-700)] text-white rounded-lg text-xs hover:bg-[var(--color-pink-900)] transition">
+                                            Voir
+                                        </button>
+                                    @endif
+                                @else
                                     <button
-                                        wire:click="$dispatch('openModal', { component: 'creations.show', size: 'large' , creationId: {{ $report->id }} })"
-                                        class="px-3 py-1.5 bg-[var(--color-pink-700)] text-white rounded-lg text-xs hover:bg-[var(--color-pink-900)] transition">
-                                        Voir
-                                    </button>
-                                @elseif($type === 'CoHosting')
-                                    <button
-                                        wire:click="$dispatch('openModal', { component: 'cohosting.show', size: 'large', coHostingId: {{ $report->id }} })"
-                                        class="px-3 py-1.5 bg-[var(--color-pink-700)] text-white rounded-lg text-xs hover:bg-[var(--color-pink-900)] transition">
-                                        Voir
+                                        wire:click="$dispatch('alert', { type: 'error', message: 'Cette publication a été supprimée par un modérateur.' })"
+                                        class="px-3 py-1.5 bg-gray-400 text-white rounded-lg text-xs cursor-not-allowed">
+                                        Supprimé
                                     </button>
                                 @endif
 

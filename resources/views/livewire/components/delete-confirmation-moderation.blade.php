@@ -1,5 +1,4 @@
 <div class="bg-white rounded-xl">
-    {{-- En-tête --}}
     <div class="flex items-center gap-2 sm:gap-3 mb-4">
         <div class="p-2 bg-orange-100 rounded-lg">
             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -13,7 +12,6 @@
         </div>
     </div>
 
-    {{-- Message de confirmation --}}
     <div class="mb-4 bg-orange-50 border border-orange-200 rounded-lg p-3 sm:p-4">
         <p class="text-sm sm:text-base text-gray-700">
             Vous êtes sur le point de supprimer {{ $itemType === 'creation' ? 'la création' : 'le co-hébergement' }}
@@ -21,13 +19,11 @@
             de l'utilisateur <span class="font-semibold text-gray-900">{{ $ownerName }}</span>.
         </p>
         <p class="text-xs sm:text-sm text-orange-700 mt-2 font-medium">
-            ⚠️ Cette action sera enregistrée dans les logs de modération
+            Cette action sera enregistrée dans les logs de modération
         </p>
     </div>
 
-    {{-- Formulaire --}}
     <form wire:submit.prevent="delete">
-        {{-- Raison de la suppression --}}
         <div class="mb-6">
             <label for="reason" class="block text-sm font-medium text-gray-700 mb-2">
                 Raison de la suppression <span class="text-red-500">*</span>
@@ -48,7 +44,6 @@
             </p>
         </div>
 
-        {{-- Informations supplémentaires --}}
         <div class="mb-6 bg-gray-50 rounded-lg p-3 sm:p-4">
             <h4 class="text-sm font-semibold text-gray-900 mb-2">Conséquences de la suppression :</h4>
             <ul class="text-xs sm:text-sm text-gray-600 space-y-1">
@@ -64,7 +59,6 @@
             </ul>
         </div>
 
-        {{-- Boutons d'action --}}
         <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end">
             <button
                 type="button"
