@@ -8,16 +8,20 @@ RUN apk add --no-cache nodejs npm
 
 WORKDIR /var/www/html
 
-COPY --chown=www-data:www-data . .
+COPY composer.json composer.lock ./
+
+COPY package.json package-lock.json ./
+RUN npm install --frozen-lockfile
 
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
-RUN npm install --frozen-lockfile
+COPY --chown=www-data:www-data . .
+
+RUN mkdir -p storage  \
+    && chown -R www-data:www-data storage \
+    && chmod -R 775 storage
 
 RUN npm run build
 
-RUN php artisan storage:link
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
 USER www-data
+
