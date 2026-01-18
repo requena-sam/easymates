@@ -16,5 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RoleSeeder::class);
+        $admin = User::find(1);
+        $admin->assignRole('admin');
+        $this->call(EventSeeder::class);
     }
 }
