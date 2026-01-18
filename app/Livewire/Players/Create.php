@@ -5,12 +5,13 @@ namespace App\Livewire\Players;
 use App\Enums\GameName;
 use App\Models\Player;
 use App\Traits\HasImages;
+use App\Traits\PlayerValidation;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use WithFileUploads, HasImages;
+    use WithFileUploads, HasImages, PlayerValidation;
 
     public $description;
     public $pseudo;
@@ -26,20 +27,6 @@ class Create extends Component
     public $image;
 
     protected $listeners = ['modalClosed' => 'resetForm'];
-
-    protected $rules = [
-        'description' => 'required|min:10',
-        'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048',
-        'pseudo' => 'required|min:3|max:50|unique:players,pseudo',
-        'first_name' => 'nullable|min:2|max:50',
-        'last_name' => 'nullable|min:2|max:50',
-        'player_number' => 'nullable|integer|min:0',
-        'role' => 'nullable|min:2|max:100',
-        'twitch' => 'nullable|min:3|max:255',
-        'youtube' => 'nullable|min:3|max:255',
-        'twitter' => 'nullable|min:3|max:255',
-        'instagram' => 'nullable|min:3|max:255',
-    ];
 
     public function updatedImage()
     {
@@ -72,12 +59,11 @@ class Create extends Component
 
             $this->dispatch('closeModal');
             $this->dispatch('playerAdded');
-            $this->dispatch('notifyAlert', message: 'Joueur créer avec succès !', type: 'success');
+            $this->sendSuccess('Joueur créé avec succès !');
             $this->resetForm();
 
         } catch (\Exception $e) {
-            \Log::error('Erreur création: ' . $e->getMessage());
-            $this->dispatch('notifyAlert', message: 'Une erreur est survenue lors de la publication.', type: 'error');
+            $this->sendError('Une erreur est survenue lors de la création.');
         }
     }
 
@@ -86,7 +72,6 @@ class Create extends Component
         $this->reset(['pseudo', 'first_name', 'last_name', 'game_name', 'player_number', 'description', 'image', 'role', 'twitch', 'youtube', 'twitter', 'instagram']);
         $this->resetValidation();
     }
-
 
     public function render()
     {
