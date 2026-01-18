@@ -43,5 +43,13 @@
     "Delete": "Supprimer",
     "No creations found matching your filters.": "Aucune création trouvée correspondant à vos filtres.",
     "Discover the creativity of fans through their posts and projects related to Gentle Mates! Feel free to share your fan art, wallpapers, or even photos.": "Découvrez la créativité des fans à travers leurs publications et projets liés à Gentle Mates ! N'hésitez pas à partager vos fan arts, fonds d'écran ou même photos.",
-    "Find all events such as Majors, league matches, world championships, or even simple LAN parties for your favorite game. For these events, you can also find solutions to your needs, such as on-site accommodation or carpooling options." : "Trouvez tous les événements tels que les Majors, les matchs de ligue, les championnats du monde, ou même de simples LAN parties pour votre jeu préféré. Pour ces événements, vous pouvez également trouver des solutions à vos besoins, telles que l'hébergement sur place ou des options de covoiturage."
+    "Find all events such as Majors, league matches, world championships, or even simple LAN parties for your favorite game. For these events, you can also find solutions to your needs, such as on-site accommodation or carpooling options." : "Trouvez tous les événements tels que les Majors, les matchs de ligue, les championnats du monde, ou même de simples LAN parties pour votre jeu préféré. Pour ces événements, vous pouvez également trouver des solutions à vos besoins, telles que l'hébergement sur place ou des options de covoiturage.",
+    "Forgot password" : "Mot de passe oublié\n",
+    "Enter your email to receive a password reset link" : "Entrez votre e-mail pour recevoir un lien de réinitialisation du mot de passe",
+    "Send reset link" : "Envoyer le lien de réinitialisation",
+    "Email Address" : "Adresse e-mail",
+    "Email password reset link" : "Réinitialiser mon mot de passe",
+    "Or, return to" : "Ou, retour à",
+    "We have emailed your password reset link." : "Nous avons envoyé par e-mail votre lien de réinitialisation du mot de passe."
+
 }
