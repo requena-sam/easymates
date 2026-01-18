@@ -21,8 +21,8 @@
                     <div class="text-center px-4">
                         @if ($image)
                             <div class="relative inline-block">
-                                {{--<img src="{{ $image->temporaryUrl() }}"
-                                     class="h-24 sm:h-32 mx-auto rounded-lg object-cover" alt="Vue de pré enregistrement">--}}
+                                <img src="{{ $image->temporaryUrl() }}"
+                                     class="h-24 sm:h-32 mx-auto rounded-lg object-cover" alt="Vue de pré enregistrement">
                                 <button
                                     type="button"
                                     wire:click.stop="$set('image', null)"
