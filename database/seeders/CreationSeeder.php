@@ -12,5 +12,6 @@ class CreationSeeder extends Seeder
      */
     public function run(): void
     {
+        //
     }
 }
