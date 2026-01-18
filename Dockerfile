@@ -17,10 +17,6 @@ RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interacti
 
 COPY --chown=www-data:www-data . .
 
-COPY . .
-
-RUN php artisan storage:link
-
 RUN npm run build
 
 USER www-data
