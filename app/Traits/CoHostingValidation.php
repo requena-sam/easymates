@@ -11,7 +11,7 @@ trait CoHostingValidation
             'description' => 'required|min:10',
             'author_message' => 'nullable|min:10',
             'images' => 'required|array|min:1|max:5',
-            'images.*' => 'image|mimes:jpeg,jpg,png,webp|max:2048',
+            'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048|dimensions:max_width=3000,max_height=2000',
             'available_spots' => 'required|integer|min:1|max:20',
             'price_per_person' => 'required|numeric|min:0|max:9999.99',
             'address' => 'required|min:5|max:255',
@@ -80,6 +80,7 @@ trait CoHostingValidation
             'discord.max' => 'Le nom d\'utilisateur Discord ne peut pas dépasser 50 caractères.',
             'twitter.max' => 'Le nom d\'utilisateur Twitter ne peut pas dépasser 50 caractères.',
             'instagram.max' => 'Le nom d\'utilisateur Instagram ne peut pas dépasser 50 caractères.',
+            'image.dimensions' => 'L\'image ne doit pas dépasser 3000x2000 pixels.',
         ];
     }
 
