@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Players;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class GameFilters extends Component
@@ -19,6 +20,12 @@ class GameFilters extends Component
     {
         $this->selectedGame = $game;
         $this->dispatch('game-selected', game: $game);
+    }
+
+    #[On('game-selected')]
+    public function updateSelection($game)
+    {
+        $this->selectedGame = $game;
     }
 
     public function render()

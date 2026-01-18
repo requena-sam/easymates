@@ -14,7 +14,8 @@ class CoHostingsList extends Component
     {
         $this->eventId = $eventId;
     }
-    #[On('coHostingDeleted')]
+
+    #[On('refreshHostingList')]
     public function refreshList()
     {
         $this->render();

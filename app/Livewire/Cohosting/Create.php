@@ -82,7 +82,7 @@ class Create extends Component
             ]);
 
             $this->dispatch('closeModal');
-            $this->dispatch('coHostingAdded');
+            $this->dispatch('refreshHostingList');
             $this->dispatch('notifyAlert', message: 'Annonce publiée avec succès !', type: 'success');
             $this->resetForm();
 

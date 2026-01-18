@@ -3,19 +3,22 @@
 namespace App\Livewire\Players;
 
 use App\Models\Player;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
 {
     public $selectedGame = 'all';
 
-    public function mount()
-    {
-    }
-
+    #[On('game-selected')]
     public function selectGame($game)
     {
         $this->selectedGame = $game;
+    }
+
+    #[On('playerAdded')]
+    public function refresh()
+    {
     }
 
     public function render()
@@ -39,7 +42,8 @@ class Index extends Component
         $players = $playersQuery->orderBy('game_name')
             ->orderBy('player_number')
             ->get()
-            ->groupBy('game_name')->map(fn($group) => $group->values());
+            ->groupBy('game_name')
+            ->map(fn($group) => $group->values());
 
         return view('livewire.players.index', [
             'streamingPlayers' => $streamingPlayers,

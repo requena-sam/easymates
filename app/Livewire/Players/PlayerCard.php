@@ -3,6 +3,7 @@
 namespace App\Livewire\Players;
 
 use App\Models\Player;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PlayerCard extends Component
@@ -12,6 +13,10 @@ class PlayerCard extends Component
     public function mount(Player $player)
     {
         $this->player = $player;
+    }
+    public function refreshList()
+    {
+        $this->render();
     }
 
     public function render()

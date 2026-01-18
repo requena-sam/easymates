@@ -4,6 +4,7 @@ namespace App\Livewire\CoHosting;
 
 use App\Models\CoHosting;
 use App\Traits\HasImages;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Show extends Component
@@ -24,24 +25,10 @@ class Show extends Component
         $this->coHosting = CoHosting::with(['user', 'event'])->findOrFail($this->coHostingId);
     }
 
-    public function delete()
+    #[On('coHostingUpdated')]
+    public function refreshCoHosting()
     {
-        $coHosting = CoHosting::findOrFail($this->coHostingId);
-
-        if ($coHosting->user_id !== auth()->id()) {
-            $this->dispatch('notifyAlert', message: 'Vous n\'êtes pas autorisé à supprimer cette annonce.', type: 'error');
-            return;
-        }
-
-        if (!empty($coHosting->image_uuids)) {
-            $this->deleteImages($coHosting->image_uuids);
-        }
-
-        $coHosting->delete();
-
-        $this->dispatch('closeModal');
-        $this->dispatch('coHostingDeleted');
-        $this->dispatch('notifyAlert', message: 'Annonce supprimée avec succès!', type: 'success');
+        $this->loadCoHosting();
     }
 
     public function render()

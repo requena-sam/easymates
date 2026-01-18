@@ -1,83 +1,64 @@
 <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-    <div class="flex h-52">
-        <!-- Partie gauche : Gradient + Photo + Numéro -->
-        <div class="relative w-52 flex-shrink-0 bg-gradient-to-br {{ $player->getGameColor() }}">
-            <!-- Numéro en background -->
+    <div class="flex flex-col xl:flex-row h-auto xl:h-52">
+
+        <div class="relative w-full xl:w-52 flex-shrink-0 bg-gradient-to-br {{ $player->getGameColor() }}">
             @if($player->player_number)
                 <div class="absolute inset-0 flex items-center justify-center opacity-20">
-                    <span class="text-white text-[120px] font-black leading-none">
+                    <span class="text-white text-[100px] xl:text-[120px] font-black leading-none">
                         {{ $player->player_number }}
                     </span>
                 </div>
             @endif
 
-            <!-- Photo de profil centrée -->
-            <div class="absolute inset-0 flex items-center justify-center p-6">
-                <div class="relative">
-                    <img
-                        src="{{ $player->getProfilePictureUrl('medium') }}"
-                        alt="{{ $player->pseudo }}"
-                        class="w-36 h-36 rounded-full border-4 border-white object-cover object-top shadow-2xl group-hover:scale-105 transition-transform duration-300">
-                    @if($player->is_streaming)
-                        <div
-                            class="absolute -bottom-1 -right-1 w-8 h-8 bg-red-500 rounded-full border-4 border-white flex items-center justify-center">
-                            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                        </div>
-                    @endif
-                </div>
+            <div class="flex items-center justify-center p-6">
+                <img
+                    src="{{ $player->getProfilePictureUrl('medium') }}"
+                    alt="{{ $player->pseudo }}"
+                    class="z-10 w-28 h-28 sm:w-32 sm:h-32 xl:w-36 xl:h-36 rounded-full border-4 border-white object-cover object-top shadow-2xl group-hover:scale-105 transition-transform duration-300">
             </div>
-
-            <!-- Badge numéro en haut -->
-            @if($player->player_number)
-                <div
-                    class="absolute top-4 left-4 bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-sm font-bold">
-                    #{{ $player->player_number }}
-                </div>
-            @endif
         </div>
-
-        <!-- Partie droite : Informations -->
         <div class="flex-1 p-6 flex flex-col justify-between">
-            <!-- Header -->
             <div>
-                <div class="flex items-start justify-between mb-3">
+                <div class="flex flex-col sm:flex-row sm:justify-between gap-2 mb-3">
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $player->pseudo }}</h3>
-                        <p class="text-sm text-gray-600">{{ $player->full_name }}</p>
+                        <h3 class="text-xl xl:text-2xl font-bold text-gray-900">
+                            {{ $player->pseudo }}
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            {{ $player->full_name }}
+                        </p>
                     </div>
+
                     @if($player->role)
                         <span
-                            class="px-3 py-1 bg-[var(--color-pink-200)] text-[var(--color-primary)] rounded-full text-xs font-medium whitespace-nowrap">
+                            class="px-3 py-1 bg-[var(--color-pink-200)] text-[var(--color-primary)] rounded-full text-xs font-medium self-start">
                             {{ $player->role }}
                         </span>
                     @endif
                 </div>
 
                 @if($player->description)
-                    <p class="text-sm text-gray-600 line-clamp-2 mb-4">
+                    <p class="text-sm text-gray-600 line-clamp-2 break-words break-all">
                         {{ $player->description }}
                     </p>
                 @endif
             </div>
 
-            <!-- Footer : Réseaux sociaux -->
-            <div class="flex items-center gap-2 pt-4 border-t border-gray-100">
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-100">
                 @if($player->twitch)
-                    <x-twitch isCta="true" link="{{$player->twitch}}"></x-twitch>
+                    <x-twitch isCta="true" link="{{$player->twitch}}" />
                 @endif
-
                 @if($player->youtube)
-                    <x-youtube isCta="true" link="{{$player->youtube}}"></x-youtube>
+                    <x-youtube isCta="true" link="{{$player->youtube}}" />
                 @endif
-
                 @if($player->twitter)
-                    <x-twitter isCta="true" link="{{$player->twitter}}"></x-twitter>
+                    <x-twitter isCta="true" link="{{$player->twitter}}" />
                 @endif
-
                 @if($player->instagram)
-                    <x-instagram isCta="true" link="{{$player->instagram}}"></x-instagram>
+                    <x-instagram isCta="true" link="{{$player->instagram}}" />
                 @endif
             </div>
         </div>
+
     </div>
 </div>

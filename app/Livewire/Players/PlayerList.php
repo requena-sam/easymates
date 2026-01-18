@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Players;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 
@@ -12,6 +13,11 @@ class PlayerList extends Component
     public function mount(Collection $players)
     {
         $this->players = $players;
+    }
+
+    public function refreshList(): void
+    {
+        $this->render();
     }
 
     public function render()

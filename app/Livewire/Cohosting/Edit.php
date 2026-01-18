@@ -104,8 +104,9 @@ class Edit extends Component
                 'instagram' => $this->instagram,
             ]);
 
-            $this->dispatch('closeModal');
+            $this->dispatch('closeEditModal');
             $this->dispatch('coHostingUpdated');
+            $this->dispatch('refreshHostingList');
             $this->dispatch('notifyAlert', message: 'Annonce modifiée avec succès !', type: 'success');
 
         } catch (\Exception $e) {

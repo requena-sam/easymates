@@ -25,7 +25,7 @@ class DeleteConfirmation extends Component
         $coHosting->delete();
 
         $this->dispatch('closeModal');
-        $this->dispatch('coHostingDeleted');
+        $this->dispatch('refreshHostingList');
         $this->dispatch('notifyAlert', message: "Le co-hébergement '{$this->coHostingName}' a été supprimé avec succès.", type: 'success');
     }
 

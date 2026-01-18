@@ -7,7 +7,7 @@
         <x-form.input-text id="first_name" placeholder="Vanya" required="true">
             Prénom
         </x-form.input-text>
-        <x-form.input-text id="last_name" placeholder="Vanya" required="true">
+        <x-form.input-text id="last_name" placeholder="Martosky" required="true">
             Nom
         </x-form.input-text>
         <div
@@ -71,7 +71,7 @@
             @enderror
         </div>
 
-        <x-form.input-text id="player_number" placeholder="Vanya" required="true">
+        <x-form.input-text id="player_number" placeholder="15" required="true">
             Numero du joueur
         </x-form.input-text>
         <x-form.input-text id="role" placeholder="Duellist, SMG,..." required="true">
