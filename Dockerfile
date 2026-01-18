@@ -1,7 +1,8 @@
 FROM serversideup/php:8.5-fpm-nginx-alpine
 
 ENV PHP_OPCACHE_ENABLE=1 \
-    AUTORUN_ENABLED=true
+    AUTORUN_ENABLED=true \
+    SSL_MODE=full
 
 USER root
 RUN apk add --no-cache nodejs npm
