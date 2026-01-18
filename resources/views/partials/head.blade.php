@@ -4,8 +4,8 @@
 <meta property="og:title" content="Easy Mates">
 <meta property="og:description"
       content="L’application qui facilite la vie des fans de Gentle Mates. Partage tes créations, prévois tes événemments et restent connecté avec tous les joueurs de la structure !.">
-<meta property="og:image" content="{{ asset('storage/images/og_image.png') }}">
-<meta property="og:url" content="https://easymates.laravel.cloud">
+<meta property="og:image" content="{{ asset('storage/images/og-image.png') }}">
+<meta property="og:url" content="https://easymate.fr">
 <meta property="og:type" content="website">
 
 <!-- Twitter -->
