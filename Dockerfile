@@ -20,6 +20,10 @@ RUN mkdir -p storage  \
     && chown -R www-data:www-data storage \
     && chmod -R 775 storage
 
+RUN mkdir -p storage/app/livewire-tmp \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage
+
 RUN npm run build
 
 USER www-data
