@@ -1,5 +1,5 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-8">
-    <a class="hover:text-[var(--color-pink-700)] flex gap-2 items-center" href="{{route('events')}}">
+    <a class="hover:text-[var(--color-pink-700)] flex gap-2 items-center" href="{{route('events.index')}}">
         <span><x-icons.arrow-back></x-icons.arrow-back></span>
         <span class="text-sm sm:text-base">Retour à la liste des événements</span>
     </a>
