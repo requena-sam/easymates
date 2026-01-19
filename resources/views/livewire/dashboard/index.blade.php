@@ -6,7 +6,7 @@
                 <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <div class="flex items-center justify-between mb-5">
                         <h2 class="text-xl font-semibold text-gray-900">Événements à venir</h2>
-                        <a href="{{ route('events') }}" class="text-sm text-[var(--color-primary)] hover:underline">
+                        <a href="{{ route('events.index') }}" class="text-sm text-[var(--color-primary)] hover:underline">
                             Voir tout
                         </a>
                     </div>
