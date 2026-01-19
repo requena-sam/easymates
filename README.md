@@ -1,9 +1,5 @@
 # Easy Mates
 
-<p align="center">
-  <img src="public/storage/images/logo_gentlemates.svg" alt="Easy Mates Logo" width="180">
-</p>
-
 <h1 align="center">Easy Mates</h1>
 
 <p align="center">
@@ -155,10 +151,8 @@ autour de Gentle Mates.
 ## 🚀 Améliorations futures
 
 - Version mobile dédiée
-- Notifications push
 - Messagerie interne
 - Statistiques avancées
-- Optimisation SEO
 - Ouverture à d’autres structures esport
 
 ---
