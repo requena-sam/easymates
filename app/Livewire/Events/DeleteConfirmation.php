@@ -27,7 +27,7 @@ class DeleteConfirmation extends Component
             $this->dispatch('closeModal');
             $this->dispatch('notifyAlert', message: "L'événement '{$this->eventName}' a été supprimé avec succès.", type: 'success');
 
-            $this->redirect(route('events'), navigate: true);
+            $this->redirect(route('events.index'));
 
         } catch (\Exception $e) {
             $this->dispatch('notifyAlert', message: "Une erreur est survenue lors de la suppression de l'événement.", type: 'error');

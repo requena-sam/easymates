@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('creations', [CreationsController::class, 'index'])->name('creations');
 
     // Events routes
-    Route::get('events', [EventsController::class, 'index'])->name('events');
+    Route::get('events', [EventsController::class, 'index'])->name('events.index');
     Route::get('events/{event}', [EventsController::class, 'show'])->name('events.show');
 
     // Players route
