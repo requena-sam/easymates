@@ -17,7 +17,7 @@ class MainNavigation extends Component
             ],
             'events' => [
                 'text' => 'Événements',
-                'route' => 'events',
+                'route' => 'events.index',
             ],
             'players' => [
                 'text' => 'Joueurs',
