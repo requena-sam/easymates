@@ -56,7 +56,6 @@
                             </svg>
                             <p class="text-xs sm:text-sm text-gray-500 mt-2">
                                 <span class="font-semibold">Cliquer pour télécharger</span>
-                                <span class="hidden sm:inline"> ou glisser-déposer</span>
                             </p>
                             <p class="text-xs text-gray-400 mt-1">PNG, JPG, WEBP jusqu'à 2MB</p>
                         @endif
