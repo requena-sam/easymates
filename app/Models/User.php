@@ -70,7 +70,7 @@ class User extends Authenticatable implements CanResetPassword
             return app(ImageService::class)->getUrl($this->profile_picture, $size);
         }
 
-        return asset('images/default-avatar.png');
+        return asset('storage/images/default-avatar.png');
     }
 
     public function deleteOldProfilePicture(): void
