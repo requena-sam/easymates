@@ -28,6 +28,12 @@ class GameFilters extends Component
         $this->selectedGame = $game;
     }
 
+    #[On('playerAdded')]
+    public function refresh()
+    {
+        $this->render();
+    }
+
     public function render()
     {
         return view('livewire.players.game-filters');

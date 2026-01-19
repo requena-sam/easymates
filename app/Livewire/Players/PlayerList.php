@@ -15,6 +15,7 @@ class PlayerList extends Component
         $this->players = $players;
     }
 
+    #[On('playerAdded')]
     public function refreshList(): void
     {
         $this->render();
