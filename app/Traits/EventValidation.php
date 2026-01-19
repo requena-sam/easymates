@@ -13,8 +13,8 @@ trait EventValidation
         'end_date' => 'required|date|after_or_equal:start_date',
         'description' => 'required|min:10',
         'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048|dimensions:max_width=3000,max_height=2000',
-        'official_ticketing_link' => 'nullable|url',
-        'secondary_ticketing_link' => 'nullable|url',
+        'official_ticketing_link' => 'nullable|url:http,https|max:2048',
+        'secondary_ticketing_link' => 'nullable|url:http,https|max:2048',
     ];
 
     protected $messages = [
