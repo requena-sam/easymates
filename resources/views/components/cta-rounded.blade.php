@@ -18,10 +18,16 @@
         dropdownStyle: {},
         toggle(el) {
             const rect = el.getBoundingClientRect()
-            this.dropdownStyle = {
-                top: rect.bottom + window.scrollY + 'px',
-                right: (window.innerWidth - rect.right) + 'px'
+
+            if (window.innerWidth < 640) {
+                this.dropdownStyle = {}
+            } else {
+                this.dropdownStyle = {
+                    top: rect.bottom + window.scrollY + 'px',
+                    right: (window.innerWidth - rect.right) + 'px'
+                }
             }
+
             this.dropdownOpen = !this.dropdownOpen
         }
     }"
@@ -32,7 +38,7 @@
         @if($hasDropdown)
             @click="toggle($refs.button)"
         @endif
-        class="flex items-center bg-white rounded-full gap-2 h-full hover:bg-gray-100 transition-colors duration-150 {{ $isIconText ? 'px-5' : 'px-2.5' }} {{ $hasDropdown ? 'cursor-pointer' : '' }}"
+        class="flex items-center bg-white rounded-full gap-2 h-full hover:bg-gray-100 transition-colors duration-150 {{ $isIconText ? 'px-5' : 'px-2.5' }} "
     >
         @if($icon !== null)
             <x-dynamic-component :component="'icons.'.$icon"/>
@@ -60,7 +66,11 @@
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
                 :style="dropdownStyle"
-                class="absolute z-50 mt-3 w-56 bg-white rounded-2xl shadow-xl"
+                class="
+                    z-50 bg-white rounded-2xl shadow-xl
+                    fixed left-1/2 -translate-x-1/2 top-24 w-[95vw]
+                    sm:absolute sm:translate-x-0 sm:left-auto sm:w-56 sm:mt-3
+                "
             >
                 @foreach($links as $link)
                     @php
